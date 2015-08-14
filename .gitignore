@@ -1,5 +1,5 @@
 *.pyc
 # don't include third-party dependencies.
-lib/
-!lib/README.md
+ext/
+!ext/README.md
 .DS_Store

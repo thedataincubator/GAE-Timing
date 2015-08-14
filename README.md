@@ -1,11 +1,10 @@
-## Python Flask Skeleton for Google App Engine
+## GAE NDB Timing module
 
-A skeleton for building Python applications on Google App Engine with the
-[Flask micro framework](http://flask.pocoo.org).
+This module has several experimental modules that test the latency of GAE.  Please add more!  Results are posted below.
 
-See our other [Google Cloud Platform github
-repos](https://github.com/GoogleCloudPlatform) for sample applications and
-scaffolding for other python frameworks and use cases.
+This project is seeded from [Appengine-Python-Flask-Skeleton](https://github.com/tianhuil/GAE-Timing) by Logan Henriquez and Johan Euphrosine.
+
+## Results
 
 ## Run Locally
 1. Install the [App Engine Python SDK](https://developers.google.com/appengine/downloads).
@@ -14,14 +13,14 @@ See the README file for directions. You'll need python 2.7 and [pip 1.4 or later
 2. Clone this repo with
 
    ```
-   git clone https://github.com/GoogleCloudPlatform/appengine-python-flask-skeleton.git
+   git clone https://github.com/tianhuil/GAE-Timing
    ```
-3. Install dependencies in the project's lib directory.
+3. Install dependencies in the project's ext directory.
    Note: App Engine can only import libraries from inside your project directory.
 
    ```
-   cd appengine-python-flask-skeleton
-   pip install -r requirements.txt -t lib
+   cd GAE-Timing
+   pip install -r requirements.txt -t ext
    ```
 4. Run this project locally from the command line:
 
@@ -75,5 +74,3 @@ See [CONTRIB.md](CONTRIB.md)
 ## Licensing
 See [LICENSE](LICENSE)
 
-## Author
-Logan Henriquez and Johan Euphrosine
