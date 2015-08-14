@@ -8,6 +8,7 @@ app = Flask(__name__)
 
 from google.appengine.ext import ndb
 from google.appengine.ext import deferred
+from lib import many_records
 
 class Counter(ndb.Model):
   count = ndb.IntegerProperty(indexed=False)
@@ -44,3 +45,8 @@ def page_not_found(e):
 def application_error(e):
   """Return a custom 500 error."""
   return 'Sorry, unexpected error: {}'.format(e), 500
+
+app.route('/many_records/seed')(many_records.seed)
+app.route('/many_records/query')(many_records.query)
+app.route('/many_records/projection_query')(many_records.projection_query)
+
