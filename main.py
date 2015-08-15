@@ -11,6 +11,8 @@ from google.appengine.ext import deferred
 from lib.many_records import many_records_seed, many_records_query, many_records_projection_query
 from lib.large_records import large_records_seed, large_records_query
 from lib.structured_property import structured_property_seed, structured_property_query, structured_property_projection_query
+from lib.repeated_records import repeated_records_seed, repeated_records_query
+from simplejson import dumps
 
 class Counter(ndb.Model):
   count = ndb.IntegerProperty(indexed=False)
@@ -56,3 +58,5 @@ app.route('/large_records/query')(large_records_query)
 app.route('/structured_property/seed')(structured_property_seed)
 app.route('/structured_property/query')(structured_property_query)
 app.route('/structured_property/projection_query')(structured_property_projection_query)
+app.route('/repeated_records/seed')(repeated_records_seed)
+app.route('/repeated_records/query')(repeated_records_query)
