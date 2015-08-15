@@ -13,6 +13,11 @@ api_version: 1
 threadsafe: yes
 
 skip_files:
+- ^(.*/)?#.*#$
+- ^(.*/)?.*~$
+- ^(.*/)?.*\.py[co]$
+- ^(.*/)?.*/RCS/.*$
+- ^(.*/)?\..*$
 - ^venv
 
 # Handlers define how to route requests to your application.
