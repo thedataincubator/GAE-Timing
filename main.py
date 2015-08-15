@@ -1,7 +1,7 @@
 """`main` is the top level module for your Flask application."""
 
 # Import the Flask Framework
-from flask import Flask
+from flask import Flask, url_for
 app = Flask(__name__)
 # Note: We don't need to call run() since our application is embedded within
 # the App Engine WSGI application server.
@@ -60,3 +60,15 @@ app.route('/structured_property/query')(structured_property_query)
 app.route('/structured_property/projection_query')(structured_property_projection_query)
 app.route('/repeated_records/seed')(repeated_records_seed)
 app.route('/repeated_records/query')(repeated_records_query)
+
+def has_no_empty_params(rule):
+  defaults = rule.defaults if rule.defaults is not None else ()
+  arguments = rule.arguments if rule.arguments is not None else ()
+  return len(defaults) >= len(arguments)
+
+@app.route("/site-map")
+def site_map():
+  return dumps([url_for(rule.endpoint)
+    for rule in app.url_map.iter_rules()
+    if "GET" in rule.methods and has_no_empty_params(rule)
+  ])
