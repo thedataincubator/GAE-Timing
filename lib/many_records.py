@@ -215,7 +215,7 @@ class ManyRecords(BaseModel):
 
   @classmethod
   @timer
-  def many_records_projection_query(cls):
+  def projection_query(cls):
     return str(cls.query(
       projection=(cls.a00, cls.a01, cls.a02, cls.a03, cls.a04, cls.a05)
     ).fetch())
