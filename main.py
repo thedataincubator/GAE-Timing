@@ -8,10 +8,10 @@ app = Flask(__name__)
 
 from google.appengine.ext import ndb
 from google.appengine.ext import deferred
-from lib.many_records import many_records_seed, many_records_query, many_records_projection_query
-from lib.large_records import large_records_seed, large_records_query
-from lib.structured_property import structured_property_seed, structured_property_query, structured_property_projection_query
-from lib.repeated_records import repeated_records_seed, repeated_records_query
+from lib.many_records import ManyRecords
+from lib.large_records import LargeRecords
+from lib.structured_property import StructuredHolder
+from lib.repeated_records import RepeatedRecords
 from simplejson import dumps
 
 class Counter(ndb.Model):
@@ -50,16 +50,10 @@ def application_error(e):
   """Return a custom 500 error."""
   return 'Sorry, unexpected error: {}'.format(e), 500
 
-app.route('/many_records/seed')(many_records_seed)
-app.route('/many_records/query')(many_records_query)
-app.route('/many_records/projection_query')(many_records_projection_query)
-app.route('/large_records/seed')(large_records_seed)
-app.route('/large_records/query')(large_records_query)
-app.route('/structured_property/seed')(structured_property_seed)
-app.route('/structured_property/query')(structured_property_query)
-app.route('/structured_property/projection_query')(structured_property_projection_query)
-app.route('/repeated_records/seed')(repeated_records_seed)
-app.route('/repeated_records/query')(repeated_records_query)
+ManyRecords.register(app)
+LargeRecords.register(app)
+StructuredHolder.register(app)
+RepeatedRecords.register(app)
 
 def has_no_empty_params(rule):
   defaults = rule.defaults if rule.defaults is not None else ()

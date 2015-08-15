@@ -1,11 +1,12 @@
 from google.appengine.ext import ndb
 from .timer import timer
+from .base import BaseModel
 
-NUM_RECORDS = 100
-NUM_FIELDS = 100
-FIELD_SIZE = 100
+class ManyRecords(BaseModel):
+  NUM_RECORDS = 100
+  NUM_FIELDS = 100
+  FIELD_SIZE = 100
 
-class ManyRecords(ndb.Model):
   a00 = ndb.StringProperty()
   a01 = ndb.StringProperty()
   a02 = ndb.StringProperty()
@@ -212,20 +213,10 @@ class ManyRecords(ndb.Model):
     x.a99 = string
     return x
 
-def many_records_seed():
-  counts = ManyRecords.query().count()
-  if counts < NUM_RECORDS:
-    for _ in xrange(NUM_RECORDS - counts):
-      ManyRecords.initialize("a" * FIELD_SIZE).put()
+  @classmethod
+  @timer
+  def many_records_projection_query(cls):
+    return str(cls.query(
+      projection=(cls.a00, cls.a01, cls.a02, cls.a03, cls.a04, cls.a05)
+    ).fetch())
 
-  return "Done"
-
-@timer
-def many_records_query():
-  return str(ManyRecords.query().fetch())
-
-@timer
-def many_records_projection_query():
-  return str(ManyRecords.query(
-    projection=(ManyRecords.a00, ManyRecords.a01, ManyRecords.a02, ManyRecords.a03, ManyRecords.a04, ManyRecords.a05)
-  ).fetch())

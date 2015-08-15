@@ -1,9 +1,6 @@
 from google.appengine.ext import ndb
 from .timer import timer
-
-NUM_RECORDS = 100
-NUM_FIELDS = 100
-FIELD_SIZE = 100
+from .base import BaseModel
 
 class StructuredValue(ndb.Model):
   a0 = ndb.StringProperty()
@@ -33,7 +30,11 @@ class StructuredValue(ndb.Model):
     x.a9 = string
     return x
 
-class StructuredHolder(ndb.Model):
+class StructuredHolder(BaseModel):
+  NUM_RECORDS = 100
+  NUM_FIELDS = 100
+  FIELD_SIZE = 100
+
   s0 = ndb.StructuredProperty(StructuredValue)
   s1 = ndb.StructuredProperty(StructuredValue)
   s2 = ndb.StructuredProperty(StructuredValue)
@@ -62,31 +63,20 @@ class StructuredHolder(ndb.Model):
     x.s9 = svs[9]
     return x
 
-def structured_property_seed():
-  counts = StructuredHolder.query().count()
-  if counts < NUM_RECORDS:
-    for _ in xrange(NUM_RECORDS - counts):
-      StructuredHolder.initialize("a" * FIELD_SIZE).put()
-
-  return "Done"
-
-@timer
-def structured_property_query():
-  return str(StructuredHolder.query().fetch())
-
-@timer
-def structured_property_projection_query():
-  return str(StructuredHolder.query(
-    projection=(
-      StructuredHolder.s0.a0,
-      StructuredHolder.s0.a1,
-      StructuredHolder.s0.a2,
-      StructuredHolder.s0.a3,
-      StructuredHolder.s0.a4,
-      StructuredHolder.s0.a5,
-      StructuredHolder.s0.a6,
-      StructuredHolder.s0.a7,
-      StructuredHolder.s0.a8,
-      StructuredHolder.s0.a9,
-    )
-  ).fetch())
+  @classmethod
+  @timer
+  def projection_query(cls):
+    return str(StructuredHolder.query(
+      projection=(
+        StructuredHolder.s0.a0,
+        StructuredHolder.s0.a1,
+        StructuredHolder.s0.a2,
+        StructuredHolder.s0.a3,
+        StructuredHolder.s0.a4,
+        StructuredHolder.s0.a5,
+        StructuredHolder.s0.a6,
+        StructuredHolder.s0.a7,
+        StructuredHolder.s0.a8,
+        StructuredHolder.s0.a9,
+      )
+    ).fetch())

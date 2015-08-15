@@ -1,11 +1,12 @@
 from google.appengine.ext import ndb
 from .timer import timer
+from .base import BaseModel
 
-NUM_RECORDS = 100
-NUM_FIELDS = 10
-FIELD_SIZE = 10000
+class LargeRecords(BaseModel):
+  NUM_RECORDS = 100
+  NUM_FIELDS = 10
+  FIELD_SIZE = 10000
 
-class LargeRecords(ndb.Model):
   t0 = ndb.TextProperty()
   t1 = ndb.TextProperty()
   t2 = ndb.TextProperty()
@@ -31,15 +32,3 @@ class LargeRecords(ndb.Model):
     x.t8 = string
     x.t9 = string
     return x
-
-def large_records_seed():
-  counts = LargeRecords.query().count()
-  if counts < NUM_RECORDS:
-    for _ in xrange(NUM_RECORDS - counts):
-      LargeRecords.initialize("a" * FIELD_SIZE).put()
-
-  return "Done"
-
-@timer
-def large_records_query():
-  return str(LargeRecords.query().fetch())
