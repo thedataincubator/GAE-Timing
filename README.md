@@ -6,23 +6,26 @@ This project is seeded from [Appengine-Python-Flask-Skeleton](https://github.com
 
 ## Results
 1. Running locally, we get
-   ```
-   0.000148 - /large_records/query
-   0.000034 - /many_records/projection_query
-   0.000358 - /many_records/query
-   0.000340 - /repeated_records/query
-   0.000049 - /structured_property/projection_query
-   0.000395 - /structured_property/query
-   ```
+
+   | time | url |
+   | ---- | --- |
+   | 0.000148 | /large_records/query |
+   | 0.000034 | /many_records/projection_query |
+   | 0.000358 | /many_records/query |
+   | 0.000340 | /repeated_records/query |
+   | 0.000049 | /structured_property/projection_query |
+   | 0.000395 | /structured_property/query |
+
 1. Running on GAE, we get
-   ```
-   0.000180 - /large_records/query
-   0.000050 - /many_records/projection_query
-   0.000330 - /many_records/query
-   0.000280 - /repeated_records/query
-   0.000070 - /structured_property/projection_query
-   0.000380 - /structured_property/query
-   ```
+
+   | time | url |
+   | ---- | --- |
+   | 0.000180 | /large_records/query |
+   | 0.000050 | /many_records/projection_query |
+   | 0.000330 | /many_records/query |
+   | 0.000280 | /repeated_records/query |
+   | 0.000070 | /structured_property/projection_query |
+   | 0.000380 | /structured_property/query |
 
 
 ## Run Locally
@@ -75,7 +78,7 @@ To deploy the application:
    python timing.py <your-app-id.appspot.com>
    ```
 
-### Feedback
+## Feedback
 Star this repo if you found it useful. Use the github issue tracker to give
 feedback on this repo.
 
