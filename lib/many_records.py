@@ -2,6 +2,8 @@ from google.appengine.ext import ndb
 from .timer import timer
 
 NUM_RECORDS = 100
+NUM_FIELDS = 100
+FIELD_SIZE = 100
 
 class ManyRecords(ndb.Model):
   a00 = ndb.StringProperty()
@@ -210,21 +212,20 @@ class ManyRecords(ndb.Model):
     x.a99 = string
     return x
 
-
-def seed():
+def many_records_seed():
   counts = ManyRecords.query().count()
   if counts < NUM_RECORDS:
     for _ in xrange(NUM_RECORDS - counts):
-      ManyRecords.initialize("This is a dummy string record").put()
+      ManyRecords.initialize("a" * FIELD_SIZE).put()
 
   return "Done"
 
 @timer
-def query():
+def many_records_query():
   return str(ManyRecords.query().fetch())
 
 @timer
-def projection_query():
+def many_records_projection_query():
   return str(ManyRecords.query(
     projection=(ManyRecords.a00, ManyRecords.a01, ManyRecords.a02, ManyRecords.a03, ManyRecords.a04, ManyRecords.a05)
   ).fetch())
