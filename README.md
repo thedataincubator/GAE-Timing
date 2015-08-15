@@ -51,10 +51,9 @@ See the README file for directions. You'll need python 2.7 and [pip 1.4 or later
    ```
 
    Visit the application [http://localhost:8080](http://localhost:8080)
-
    See [the development server documentation](https://developers.google.com/appengine/docs/python/tools/devserver) for options when running dev_appserver.
 
-   To run the test, run
+1. To run the test, run
 
    ```
    python timing.py http://localhost:8080
@@ -73,7 +72,7 @@ To deploy the application:
    ```
 1. Your application is now live at [your-app-id.appspot.com](your-app-id.appspot.com).
 
-   You can now run the timing script
+1. You can now run the timing script
    ```
    python timing.py <your-app-id.appspot.com>
    ```
@@ -81,9 +80,6 @@ To deploy the application:
 ## Feedback
 Star this repo if you found it useful. Use the github issue tracker to give
 feedback on this repo.
-
-## Contributing changes
-See [CONTRIB.md](CONTRIB.md)
 
 ## Licensing
 See [LICENSE](LICENSE)
