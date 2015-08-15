@@ -12,6 +12,7 @@ from lib.many_records import ManyRecords
 from lib.large_records import LargeRecords
 from lib.structured_property import StructuredHolder
 from lib.repeated_records import RepeatedRecords
+from lib.key_property import KeyRecord
 from simplejson import dumps
 
 class Counter(ndb.Model):
@@ -54,6 +55,7 @@ ManyRecords.register(app)
 LargeRecords.register(app)
 StructuredHolder.register(app)
 RepeatedRecords.register(app)
+KeyRecord.register(app)
 
 def has_no_empty_params(rule):
   defaults = rule.defaults if rule.defaults is not None else ()

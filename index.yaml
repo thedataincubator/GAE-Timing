@@ -10,6 +10,11 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: KeyRecord
+  properties:
+  - name: s0
+  - name: s1
+
 - kind: ManyRecords
   properties:
   - name: a00
