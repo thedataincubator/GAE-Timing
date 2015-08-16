@@ -31,4 +31,4 @@ class RepeatedKeyRecord(BaseModel):
     results_dict=  { r.key: r for r in results }
     for key_record in key_records:
       key_record.sv2 = [results_dict[k] for k in key_record.sv]
-    return str(key_records)
+    return str(key_records) + str(results)
