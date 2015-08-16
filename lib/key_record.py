@@ -57,8 +57,8 @@ class KeyRecord(BaseModel):
       )
     ]
 
-    ndb.get_multi(keys)
-    return str(keys)
+    results = ndb.get_multi(keys)
+    return str(results) + str(key_records)
 
   @classmethod
   @timer
