@@ -4,32 +4,28 @@ This module has several experimental modules that test the latency of GAE.  Plea
 
 This project is seeded from [Appengine-Python-Flask-Skeleton](https://github.com/tianhuil/GAE-Timing) by Logan Henriquez and Johan Euphrosine.
 
+## Methods
+
+1. We ran both full queries (`full_query`) and projection queries (`projection_query`) on 1MB of data stored in various ways.  The full `projection_query` were typically for ~ 1MB of data while the `projection_query` were for less.  We would clear the memcache before performing the query.  For each query, we returned:
+   - clock time (as measured by `time.clock()` on the server)
+   - wall time (as measured by `time.time()` on the server)
+   - request wait time (as measured by `time.time()` on the client)
+   - the number of bytes of the string representation (computed on the server, but only the first 1K characters were returned to the client).
+
+This measure the amount of time it takes for GAE to fetch and deserialize a result from NDB.
+
 ## Results
-1. Running locally, we get
 
-   | request time | server time | server clock | data size | url |
-   | ---- | --- | --- | --- | --- |
-   | 0.006351 | 0.006338 | 0.001750 |    1181169 | /KeyRecord/full_query |
-   | 0.000241 | 0.000228 | 0.000127 |     242847 | /KeyRecord/projection_query |
-   | 0.000464 | 0.000452 | 0.000208 |    1499355 | /LargeRecord/full_query |
-   | 0.001358 | 0.001346 | 0.000329 |    1095300 | /ManyRecord/full_query |
-   | 0.000324 | 0.000312 | 0.000032 |      76300 | /ManyRecord/projection_query |
-   | 0.003664 | 0.003644 | 0.001630 |      48708 | /RepeatedKeyRecord/full_query |
-   | 0.001332 | 0.001321 | 0.000405 |    1056500 | /RepeatedRecord/full_query |
-   | 0.001244 | 0.001234 | 0.000364 |    1106500 | /StructuredRecord/full_query |
-   | 0.000420 | 0.000408 | 0.000080 |     134300 | /StructuredRecord/projection_query |
+1. Projection queries (`projection_query`) take up much less time than pulling back the entire object (`full_query`), even thoguh they query over the same number of records .  It seems that the query time is proportional to the size of the data returned for projections.
 
-1. Running on GAE, we get
+1. Large properties (`TextProperty`) takes less time than many small records (`StringProperty`) for the same size of data returned (in our case, 50% less).
 
-   | time | url |
-   | ---- | --- |
-   | 0.000180 | /large_records/query |
-   | 0.000050 | /many_records/projection_query |
-   | 0.000330 | /many_records/query |
-   | 0.000280 | /repeated_records/query |
-   | 0.000070 | /structured_property/projection_query |
-   | 0.000380 | /structured_property/query |
+1. Having a single property of length `n` (`RepeatedRecord`) vs. having `n` properties with unique names (`ManyRecord`) takes the same amount of time.
 
+1. Using SQL-like "foreign" keys is non-performant (`KeyRecord`) and fetching them using `ndb.get_mutli` is non.performant.  It is (2 - 5 times slower) than having those objects be structured properties (`StructuredRecord`).  This is true regardless of whether the keys are a repeated property (`RepeatedKeyRecord`) or individual properties with unique names (`KeyRecord`).  In fact, custom `ndb.StructuredProperty` is as efficient as builtin NDB properties (`RepeatedRecord`).
+
+## Data and Plots
+1. See [/timing.ipynb](timing.ipynb)
 
 ## Run Locally
 1. Install the [App Engine Python SDK](https://developers.google.com/appengine/downloads).
