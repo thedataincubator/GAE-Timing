@@ -15,23 +15,6 @@ from lib.repeated_record import RepeatedRecord
 from lib.key_record import KeyRecord
 from simplejson import dumps
 
-class Counter(ndb.Model):
-  count = ndb.IntegerProperty(indexed=False)
-
-def reset():
-  ndb.delete_multi(Counter().query().fetch(keys_only=True, use_cache=False, use_memcache=False))
-
-def increment():
-  counter = Counter().query().get(use_cache=False, use_memcache=False)
-  if not counter:
-    counter = Counter(count=0)
-
-  counter.count += 1
-  counter.put()
-
-  if counter.count < 10:
-    deferred.defer(increment)
-
 @app.route('/')
 def hello():
   """Return a friendly HTTP greeting."""
