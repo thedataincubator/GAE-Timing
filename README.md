@@ -7,14 +7,17 @@ This project is seeded from [Appengine-Python-Flask-Skeleton](https://github.com
 ## Results
 1. Running locally, we get
 
-   | time | url |
-   | ---- | --- |
-   | 0.000148 | /large_records/query |
-   | 0.000034 | /many_records/projection_query |
-   | 0.000358 | /many_records/query |
-   | 0.000340 | /repeated_records/query |
-   | 0.000049 | /structured_property/projection_query |
-   | 0.000395 | /structured_property/query |
+   | request time | server time | server clock | data size | url | --- |
+   | ---- | --- | --- | --- | --- |
+   | 0.006351 | 0.006338 | 0.001750 |    1181169 | /KeyRecord/full_query |
+   | 0.000241 | 0.000228 | 0.000127 |     242847 | /KeyRecord/projection_query |
+   | 0.000464 | 0.000452 | 0.000208 |    1499355 | /LargeRecord/full_query |
+   | 0.001358 | 0.001346 | 0.000329 |    1095300 | /ManyRecord/full_query |
+   | 0.000324 | 0.000312 | 0.000032 |      76300 | /ManyRecord/projection_query |
+   | 0.003664 | 0.003644 | 0.001630 |      48708 | /RepeatedKeyRecord/full_query |
+   | 0.001332 | 0.001321 | 0.000405 |    1056500 | /RepeatedRecord/full_query |
+   | 0.001244 | 0.001234 | 0.000364 |    1106500 | /StructuredRecord/full_query |
+   | 0.000420 | 0.000408 | 0.000080 |     134300 | /StructuredRecord/projection_query |
 
 1. Running on GAE, we get
 
