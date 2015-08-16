@@ -22,7 +22,7 @@ This measure the amount of time it takes for GAE to fetch and deserialize a resu
 
 1. Having a single property of length `n` (`RepeatedRecord`) vs. having `n` properties with unique names (`ManyRecord`) takes the same amount of time.
 
-1. Using SQL-like "foreign" keys is non-performant (`KeyRecord`) and fetching them using `ndb.get_mutli` is non.performant.  It is (2 - 5 times slower) than having those objects be structured properties (`StructuredRecord`).  This is true regardless of whether the keys are a repeated property (`RepeatedKeyRecord`) or individual properties with unique names (`KeyRecord`).  In fact, custom `ndb.StructuredProperty` is as efficient as builtin NDB properties (`RepeatedRecord`).
+1. Using SQL-like "foreign" keys is non-performant (`KeyRecord`) and fetching them using `ndb.get_mutli` is non.performant.  It is (2 - 5 times slower) than having those objects be structured properties (`StructuredRecord`).  This is true regardless of whether the keys are a repeated property (`RepeatedKeyRecord`) or individual properties with unique names (`KeyRecord`).  In fact, custom properties (`ndb.StructuredProperty`) are as efficient as builtin NDB properties (e.g. `ndb.StringProperty`): see (`RepeatedRecord` vs `StructuredRecord`).
 
 ## Data and Plots
 1. See [/timing.ipynb](timing.ipynb)
