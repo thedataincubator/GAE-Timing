@@ -8,7 +8,7 @@ if __name__ == '__main__':
   base_url = sys.argv[1]
 
   print "Fetching root"
-  assert requests.get(urljoin(base_url, '/site-map')).status_code == 200
+  assert requests.get(urljoin(base_url, '/')).status_code == 200
 
   print "Fetching sitemap"
   site_map = requests.get(urljoin(base_url, '/site-map')).json()
@@ -17,7 +17,7 @@ if __name__ == '__main__':
 
   print "Seeding data ..."
   for route in seeds:
-    requests.post(urljoin(base_url, route))
+    assert requests.post(urljoin(base_url, route)).status_code == 200
 
   print "Flushing memchace ..."
   requests.post(urljoin(base_url, "/flush_memcache"))
