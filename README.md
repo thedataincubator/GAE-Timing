@@ -7,7 +7,7 @@ This project is seeded from [Appengine-Python-Flask-Skeleton](https://github.com
 ## Results
 1. Running locally, we get
 
-   | request time | server time | server clock | data size | url | --- |
+   | request time | server time | server clock | data size | url |
    | ---- | --- | --- | --- | --- |
    | 0.006351 | 0.006338 | 0.001750 |    1181169 | /KeyRecord/full_query |
    | 0.000241 | 0.000228 | 0.000127 |     242847 | /KeyRecord/projection_query |
