@@ -30,6 +30,11 @@ class BaseModel(ndb.Model):
     raise NotImplementedError
 
   @classmethod
+  @timer
+  def alt_query(cls):
+    raise NotImplementedError
+
+  @classmethod
   def _register_endpoint(cls, app, func, methods=['GET']):
     app.add_url_rule(
       '/{cls}/{func}'.format(cls=cls.__name__, func=func.__name__),
@@ -45,5 +50,11 @@ class BaseModel(ndb.Model):
     try:
       cls.projection_query()  # it's optional to specify this
       cls._register_endpoint(app, cls.projection_query)
+    except NotImplementedError:
+      pass
+
+    try:
+      cls.alt_query()  # it's optional to specify this
+      cls._register_endpoint(app, cls.alt_query)
     except NotImplementedError:
       pass

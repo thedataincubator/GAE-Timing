@@ -28,7 +28,23 @@ class RepeatedKeyRecord(BaseModel):
     ]
 
     results = ndb.get_multi(keys)
-    results_dict=  { r.key: r for r in results }
+    results_dict = { r.key: r for r in results }
+    for key_record in key_records:
+      key_record.sv2 = [results_dict[k] for k in key_record.sv]
+    return str(key_records) + str(results)
+
+  @classmethod
+  @timer
+  def alt_query(cls):
+    key_records = RepeatedKeyRecord.query().fetch()
+    # join in with non-key-records
+    keys = [ key
+      for key_record in key_records
+      for key in key_record.sv
+    ]
+
+    results = StructuredValue.query(StructuredValue.key.IN(keys))
+    results_dict = { r.key: r for r in results }
     for key_record in key_records:
       key_record.sv2 = [results_dict[k] for k in key_record.sv]
     return str(key_records) + str(results)

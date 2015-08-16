@@ -4,6 +4,8 @@ import sys
 import time
 
 def fetch_result(base_url, route):
+  # clearing memcache
+  requests.post(urljoin(base_url, "/flush_memcache"))
   t1 = time.time()
   response = requests.get(urljoin(base_url, route)).json()
   t2 = time.time()
@@ -12,10 +14,10 @@ def fetch_result(base_url, route):
   return response
 
 def fetch_results(base_url):
-  print "Fetching root"
+  print "Fetching root ..."
   assert requests.get(urljoin(base_url, '/')).status_code == 200
 
-  print "Fetching sitemap"
+  print "Fetching sitemap ..."
   site_map = requests.get(urljoin(base_url, '/site-map')).json()
   seeds = [route.strip() for route in site_map if 'seed' in route]
   queries = sorted([route.strip() for route in site_map if 'query' in route])
@@ -23,9 +25,6 @@ def fetch_results(base_url):
   print "Seeding data ..."
   for route in seeds:
     assert requests.post(urljoin(base_url, route)).status_code == 200
-
-  print "Flushing memchace ..."
-  requests.post(urljoin(base_url, "/flush_memcache"))
 
   print "Querying ..."
   return [fetch_result(base_url, route) for route in queries]
