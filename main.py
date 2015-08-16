@@ -13,6 +13,7 @@ from lib.large_record import LargeRecord
 from lib.structured_record import StructuredRecord
 from lib.repeated_record import RepeatedRecord
 from lib.key_record import KeyRecord
+from lib.repeated_key_record import RepeatedKeyRecord
 from simplejson import dumps
 
 @app.route('/')
@@ -39,6 +40,7 @@ LargeRecord.register(app)
 StructuredRecord.register(app)
 RepeatedRecord.register(app)
 KeyRecord.register(app)
+RepeatedKeyRecord.register(app)
 
 def has_no_empty_params(rule):
   defaults = rule.defaults if rule.defaults is not None else ()
