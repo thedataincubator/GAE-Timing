@@ -6,8 +6,7 @@ app = Flask(__name__)
 # Note: We don't need to call run() since our application is embedded within
 # the App Engine WSGI application server.
 
-from google.appengine.ext import ndb
-from google.appengine.ext import deferred
+from google.appengine.api import memcache
 from lib.many_record import ManyRecord
 from lib.large_record import LargeRecord
 from lib.structured_record import StructuredRecord
@@ -19,8 +18,6 @@ from simplejson import dumps
 @app.route('/')
 def hello():
   """Return a friendly HTTP greeting."""
-  reset()
-  deferred.defer(increment)
   return 'Hello World!'
 
 
@@ -42,6 +39,11 @@ RepeatedRecord.register(app)
 KeyRecord.register(app)
 RepeatedKeyRecord.register(app)
 
+@app.route("/flush_memcache", methods=['POST'])
+def flush_memcache():
+  memcache.flush_all()
+  return "Done"
+
 def has_no_empty_params(rule):
   defaults = rule.defaults if rule.defaults is not None else ()
   arguments = rule.arguments if rule.arguments is not None else ()
@@ -51,5 +53,6 @@ def has_no_empty_params(rule):
 def site_map():
   return dumps([url_for(rule.endpoint)
     for rule in app.url_map.iter_rules()
-    if "GET" in rule.methods and has_no_empty_params(rule)
+    if ("GET" in rule.methods or "POST" in rule.methods) and has_no_empty_params(rule)
   ])
+

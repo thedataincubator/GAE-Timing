@@ -30,16 +30,17 @@ class BaseModel(ndb.Model):
     raise NotImplementedError
 
   @classmethod
-  def _register_endpoint(cls, app, func):
+  def _register_endpoint(cls, app, func, methods=['GET']):
     app.add_url_rule(
       '/{cls}/{func}'.format(cls=cls.__name__, func=func.__name__),
       '{cls}.{func}'.format(cls=cls.__name__, func=func.__name__),
-      func
+      func,
+      methods=methods,
     )
 
   @classmethod
   def register(cls, app):
-    cls._register_endpoint(app, cls.seed)
+    cls._register_endpoint(app, cls.seed, methods=['POST'])
     cls._register_endpoint(app, cls.full_query)
     try:
       cls.projection_query()  # it's optional to specify this
