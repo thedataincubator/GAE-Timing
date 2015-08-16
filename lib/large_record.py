@@ -2,7 +2,7 @@ from google.appengine.ext import ndb
 from .timer import timer
 from .base import BaseModel
 
-class LargeRecords(BaseModel):
+class LargeRecord(BaseModel):
   NUM_RECORDS = 100
   NUM_FIELDS = 10
   FIELD_SIZE = 10000

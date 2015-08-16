@@ -5,8 +5,8 @@ from simplejson import dumps
 def timer(function):
   @functools.wraps(function)
   def wrapped_function(*args, **kwargs):
-    start= time.clock()
+    c1, t1 = time.clock(), time.time()
     result = function(*args, **kwargs)
-    end= time.clock()
-    return dumps({ 'time': (end-start) / 1000, 'result': dumps(result)[:1000] })
+    c2, t2 = time.clock(), time.time()
+    return dumps({ 'time': (t2-t1) / 1000, 'clock': (c2-c1) / 1000, 'result': result[:1000], 'length': len(result) })
   return wrapped_function

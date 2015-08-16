@@ -8,11 +8,11 @@ app = Flask(__name__)
 
 from google.appengine.ext import ndb
 from google.appengine.ext import deferred
-from lib.many_records import ManyRecords
-from lib.large_records import LargeRecords
-from lib.structured_property import StructuredHolder
-from lib.repeated_records import RepeatedRecords
-from lib.key_property import KeyRecord
+from lib.many_record import ManyRecord
+from lib.large_record import LargeRecord
+from lib.structured_record import StructuredRecord
+from lib.repeated_record import RepeatedRecord
+from lib.key_record import KeyRecord
 from simplejson import dumps
 
 class Counter(ndb.Model):
@@ -51,10 +51,10 @@ def application_error(e):
   """Return a custom 500 error."""
   return 'Sorry, unexpected error: {}'.format(e), 500
 
-ManyRecords.register(app)
-LargeRecords.register(app)
-StructuredHolder.register(app)
-RepeatedRecords.register(app)
+ManyRecord.register(app)
+LargeRecord.register(app)
+StructuredRecord.register(app)
+RepeatedRecord.register(app)
 KeyRecord.register(app)
 
 def has_no_empty_params(rule):

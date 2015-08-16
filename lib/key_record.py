@@ -1,6 +1,6 @@
 from google.appengine.ext import ndb
 from .timer import timer
-from .structured_property import StructuredValue
+from .structured_record import StructuredValue
 from .base import BaseModel
 
 class KeyRecord(BaseModel):
@@ -73,5 +73,5 @@ class KeyRecord(BaseModel):
       )
     ]
 
-    ndb.get_multi(keys)
-    return str(keys)
+    results = ndb.get_multi(keys)
+    return str(results) + str(key_records)

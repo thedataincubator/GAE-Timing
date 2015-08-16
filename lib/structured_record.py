@@ -30,7 +30,7 @@ class StructuredValue(ndb.Model):
     x.a9 = string
     return x
 
-class StructuredHolder(BaseModel):
+class StructuredRecord(BaseModel):
   NUM_RECORDS = 100
   NUM_FIELDS = 100
   FIELD_SIZE = 100
@@ -66,17 +66,17 @@ class StructuredHolder(BaseModel):
   @classmethod
   @timer
   def projection_query(cls):
-    return str(StructuredHolder.query(
+    return str(StructuredRecord.query(
       projection=(
-        StructuredHolder.s0.a0,
-        StructuredHolder.s0.a1,
-        StructuredHolder.s0.a2,
-        StructuredHolder.s0.a3,
-        StructuredHolder.s0.a4,
-        StructuredHolder.s0.a5,
-        StructuredHolder.s0.a6,
-        StructuredHolder.s0.a7,
-        StructuredHolder.s0.a8,
-        StructuredHolder.s0.a9,
+        StructuredRecord.s0.a0,
+        StructuredRecord.s0.a1,
+        StructuredRecord.s0.a2,
+        StructuredRecord.s0.a3,
+        StructuredRecord.s0.a4,
+        StructuredRecord.s0.a5,
+        StructuredRecord.s0.a6,
+        StructuredRecord.s0.a7,
+        StructuredRecord.s0.a8,
+        StructuredRecord.s0.a9,
       )
     ).fetch())

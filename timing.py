@@ -1,6 +1,7 @@
 import requests
 from urlparse import urljoin
 import sys
+import time
 
 if __name__ == '__main__':
   # seed website
@@ -16,4 +17,11 @@ if __name__ == '__main__':
 
   print "Querying ..."
   for route in queries:
-    print "%.6f - %s" % (requests.get(urljoin(base_url, route)).json()['time'], route)
+    t1 = time.time()
+    response = requests.get(urljoin(base_url, route)).json()
+    server_time = response['time']
+    server_clock = response['clock']
+    length = response['length']
+    t2 = time.time()
+    request_time = (t2 - t1) / 1000.
+    print "%.6f - %.6f - %.6f - %10d - %s" % (request_time, server_time, server_clock, length, route)
