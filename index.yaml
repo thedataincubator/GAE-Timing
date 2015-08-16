@@ -24,28 +24,6 @@ indexes:
   - name: a04
   - name: a05
 
-- kind: ManyRecords
-  properties:
-  - name: a00
-  - name: a01
-  - name: a02
-  - name: a03
-  - name: a04
-  - name: a05
-
-- kind: StructuredHolder
-  properties:
-  - name: s0.a0
-  - name: s0.a1
-  - name: s0.a2
-  - name: s0.a3
-  - name: s0.a4
-  - name: s0.a5
-  - name: s0.a6
-  - name: s0.a7
-  - name: s0.a8
-  - name: s0.a9
-
 - kind: StructuredRecord
   properties:
   - name: s0.a0
